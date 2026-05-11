@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Rifa Atletas de Ouro</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
+    
+  <style>
+    body {
+      background: #000a1d;
+      color: #fff;
+      font-family: Arial;
+    }
+
+    .contador {
+      background: #00071b;
+      padding: 20px;
+      text-align: center;
+      font-size: 30px;
+      border-radius: 10px;
+      margin: 30px;
+    }
+
+    #timer {
+      color: #38bdf8;
+      font-weight: bold;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- CONTADOR -->
+  <div class="contador">
+    ⏰ Sorteio termina em:
+    <span id="timer"></span>
+  </div>
+
+  <!-- POPUP (SÓ UM - CORRIGIDO) -->
+  <div class="popup" id="popup">
+
+    <div class="popup-box">
+
+      <h2>Finalizar Compra</h2>
+
+      <input type="text" id="nome" placeholder="Nome">
+      <input type="email" id="email" placeholder="Email">
+      <input type="tel" id="telefone" placeholder="Telefone">
+
+      <div id="listaNumeros"></div>
+
+      <button onclick="confirmarCompra()">Confirmar compra</button>
+
+    </div>
+
+  </div>
+
+  <!-- POPUP PAGAMENTO PIX -->
+<div class="popup" id="popupPix">
+  <div class="popup-box">
+
+    <h2>Pagamento</h2>
+
+    <p style="text-align:center; color:#d1d5db;">
+      Escaneie o QR Code ou copie o PIX abaixo
+    </p>
+
+    <!-- QR CODE (pode trocar a imagem depois) -->
+    <img src="pix.png" alt="PIX QR Code" style="width:100%; border-radius:12px; margin:10px 0;">
+
+    <!-- CHAVE PIX -->
+    <div id="pixChave" style="
+      background:#020d1c;
+      padding:12px;
+      border-radius:10px;
+      text-align:center;
+      color:#38bdf8;
+      font-weight:bold;
+      word-break:break-all;
+    ">
+      sua-chave-pix-aqui@exemplo.com
+    </div>
+
+    <button onclick="copiarPix()" class="btn-copiar">
+      📋 Copiar PIX
+    </button>
+
+    <button onclick="envviarcomprovante()" style="margin-top:5px;">
+      ENVIAR COMPROVANTE
+      </button>
+
+    <button onclick="fecharPix()" style="margin-top:10px;">
+      FECHAR
+    </button> 
+
+  </div>
+</div>
+
+  <!-- BANNER -->
+  <header class="banner">
+
+    <div class="banner-content">
+
+      <div class="banner-text">
+
+        <h1>RIFA: <br> ATLETAS DE OURO!</h1>
+
+        <div class="linha"></div>
+
+        <p>Ajude nosso time a representar o Brasil no Peru</p>
+
+        <a href="#rifa" class="btn">
+          <i class="fa-solid fa-arrow-down"></i>
+          ESCOLHER NÚMEROS
+        </a>
+
+      </div>
+
+    </div>
+
+  </header>
+
+  <!-- OBJETIVO -->
+  <section class="objetivo">
+
+    <div class="card">
+
+      <div class="icone">
+        <i class="fa-solid fa-plane"></i>
+      </div>
+
+      <div class="conteudo">
+
+        <h2>NOSSO OBJETIVO</h2>
+
+        <div class="linha-pequena"></div>
+
+        <p>
+          Estamos arrecadando fundos para viajar ao Peru.
+          <span>Sua ajuda faz parte disso!</span>
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- RIFA -->
+  <section class="rifa" id="rifa">
+
+    <div class="card-rifa">
+
+      <h2>ESCOLHA SEUS NÚMEROS POR APENAS R$ 00,50 CADA</h2>
+
+      <div class="container-grid">
+        <div class="grid-numeros" id="gridNumeros"></div>
+      </div>
+
+      <div class="selecionados">
+
+        <div class="lista-selecionados" id="listaSelecionados"></div>
+
+        <button class="comprar" id="comprar">COMPRAR</button>
+
+        <button class="limpar" id="limpar">LIMPAR</button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p>JUNTOS SOMOS MAIS FORTES! 💙🏐</p>
+
+    <a href="@">
+      Feito por
+      <i class="fa-brands fa-instagram"></i>
+      Vitorjlk12
+    </a>
+
+    <a href="#">
+      <i class="fa-brands fa-instagram"></i>
+      @ATEV.AABBCAMPINAS
+      </a>
+  
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
