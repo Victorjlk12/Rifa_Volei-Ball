@@ -40,6 +40,26 @@
 
 <body>
 
+  <!-- POPUP TERMOS -->
+<div id="popup-termos" class="popup-termos">
+
+  <div class="popup-box-termos">
+
+    <h2>Termos de Uso</h2>
+
+    <p>
+      Os dados coletados neste site não serão utilizdos para nada mais além de armazenamento interno de dados para o sorteio após a data expirada!
+      Ao acessar este site você concorda com os termos de uso.
+    </p>
+
+    <button onclick="fecharTermos()">
+      ACEITAR
+    </button>
+
+  </div>
+
+</div>
+
   <!-- CONTADOR -->
   <div class="contador">
     ⏰ Sorteio termina em:
@@ -72,11 +92,10 @@
     <h2>Pagamento</h2>
 
     <p style="text-align:center; color:#d1d5db;">
-      Escaneie o QR Code ou copie o PIX abaixo
+      Copie o PIX abaixo para efetuar o pagamento!
     </p>
 
     <!-- QR CODE (pode trocar a imagem depois) -->
-    <img src="pix.png" alt="PIX QR Code" style="width:100%; border-radius:12px; margin:10px 0;">
 
     <!-- CHAVE PIX -->
     <div id="pixChave" style="
@@ -117,7 +136,7 @@
 
         <div class="linha"></div>
 
-        <p>Ajude nosso time a representar o Brasil no Peru</p>
+        <p>Ajude nosso time a representar o Brasil em Lima PERU</p>
 
         <a href="#rifa" class="btn">
           <i class="fa-solid fa-arrow-down"></i>
@@ -199,6 +218,14 @@
   </footer>
 
   <script src="script.js"></script>
+
+  <script>
+    function fecharTermos() {
+  
+      document.getElementById("popup-termos").style.display = "none";
+  
+    }
+  </script>
 
 </body>
 

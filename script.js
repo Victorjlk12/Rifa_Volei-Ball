@@ -25,95 +25,112 @@ setInterval(() => {
 
 
 // ======================
-// ESTADO GLOBAL
+// ESTADO
 // ======================
-window.selecionados = [];
+
+let selecionados = [];
+let comprados = JSON.parse(localStorage.getItem("comprados")) || [];
 
 const grid = document.getElementById("gridNumeros");
 const lista = document.getElementById("listaSelecionados");
 const popup = document.getElementById("popup");
 const listaNumeros = document.getElementById("listaNumeros");
-const btnComprar = document.getElementById("comprar");
-const btnLimpar = document.getElementById("limpar");
-''
+
 
 // ======================
 // GERAR NÚMEROS
 // ======================
+
 for (let i = 1; i <= 1000; i++) {
 
-  const botao = document.createElement("button");
-  botao.classList.add("numero");
-  botao.textContent = i.toString().padStart(3, "0");
+  const numero = i.toString().padStart(3, "0");
 
-  botao.addEventListener("click", () => {
+  const btn = document.createElement("button");
+  btn.classList.add("numero");
+  btn.textContent = numero;
 
-    const numero = botao.textContent;
-    botao.classList.toggle("ativo");
+  // já comprado
+  if (comprados.includes(numero)) {
+    btn.classList.add("comprado");
+    btn.disabled = true;
+  }
 
-    if (window.selecionados.includes(numero)) {
-      window.selecionados = window.selecionados.filter(n => n !== numero);
+  btn.addEventListener("click", () => {
+
+    if (btn.disabled) return;
+
+    btn.classList.toggle("ativo");
+
+    if (selecionados.includes(numero)) {
+      selecionados = selecionados.filter(n => n !== numero);
     } else {
-      window.selecionados.push(numero);
+      selecionados.push(numero);
     }
 
     atualizarLista();
   });
 
-  grid.appendChild(botao);
+  grid.appendChild(btn);
 }
 
 
 // ======================
-// ATUALIZAR LISTA
+// MOSTRAR SELECIONADOS
 // ======================
+
 function atualizarLista() {
+
   lista.innerHTML = "";
 
-  window.selecionados.forEach(num => {
+  selecionados.forEach(num => {
+
     const item = document.createElement("div");
     item.classList.add("item");
     item.textContent = num;
+
     lista.appendChild(item);
+
   });
+
 }
 
 
 // ======================
 // LIMPAR
 // ======================
-btnLimpar.addEventListener("click", () => {
 
-  window.selecionados = [];
+document.getElementById("limpar").addEventListener("click", () => {
 
-  
+  selecionados = [];
 
   document.querySelectorAll(".numero")
     .forEach(b => b.classList.remove("ativo"));
 
   atualizarLista();
+
 });
 
 
 // ======================
-// ABRIR COMPRA (BLOQUEADO)
+// COMPRAR
 // ======================
-btnComprar.addEventListener("click", () => {
 
-  // 🔒 BLOQUEIO TOTAL
-  if (window.selecionados.length === 0) {
-    alert("⚠️ Selecione pelo menos 1 número antes de comprar!");
+document.getElementById("comprar").addEventListener("click", () => {
+
+  if (selecionados.length === 0) {
+    alert("Selecione números!");
     return;
   }
 
-  listaNumeros.innerHTML = window.selecionados.join(", ");
+  listaNumeros.innerHTML = selecionados.join(", ");
   popup.classList.add("ativo");
 });
 
 
 // ======================
-// FECHAR POPUP AO CLICAR FORA
+// FECHAR POPUP
 // ======================
+
 popup.addEventListener("click", (e) => {
   if (e.target === popup) {
     popup.classList.remove("ativo");
@@ -122,146 +139,142 @@ popup.addEventListener("click", (e) => {
 
 
 // ======================
-// CONFIRMAR COMPRA (FINAL)
+// CONFIRMAR COMPRA
 // ======================
-function confirmarCompra() {
 
-  window.vendas.push({
-    nome,
-    email,
-    telefone,
-    numeros: [...window.selecionados]
-  });
+function confirmarCompra() {
 
   const nome = document.getElementById("nome").value;
   const email = document.getElementById("email").value;
   const telefone = document.getElementById("telefone").value;
-
-  // 🔒 BLOQUEIO FINAL
-  if (window.selecionados.length === 0) {
-    alert("Erro: nenhum número selecionado!");
-    return;
-  }
 
   if (!nome || !email || !telefone) {
     alert("Preencha todos os campos!");
     return;
   }
 
-  alert(`Compra confirmada! Obrigado ${nome}`);
-
-  // reset
-  window.selecionados = [];
-  atualizarLista();
-
-  document.querySelectorAll(".numero")
-    .forEach(b => b.classList.remove("ativo"));
-
   popup.classList.remove("ativo");
-}
-
-function confirmarCompra(){
-
-  const nome = document.getElementById("nome").value;
-  const email = document.getElementById("email").value;
-  const telefone = document.getElementById("telefone").value;
-
-  if(!nome || !email || !telefone){
-    alert("Preencha todos os campos!");
-    return;
-  }
-
-  if(!window.selecionados || window.selecionados.length === 0){
-    alert("Selecione pelo menos 1 número!");
-    return;
-  }
-
-  // fecha popup de dados
-  document.getElementById("popup").style.display = "none";
-
-  // abre popup PIX
   document.getElementById("popupPix").classList.add("ativo");
 }
-function copiarPix(){
+
+
+// ======================
+// COPIAR PIX
+// ======================
+
+function copiarPix() {
 
   const pix = document.getElementById("pixChave").innerText;
 
-  navigator.clipboard.writeText(pix)
-    .then(() => {
-      alert("PIX copiado com sucesso!");
-    })
-    .catch(() => {
-      alert("Erro ao copiar PIX.");
-    });
+  navigator.clipboard.writeText(pix);
+
+  alert("PIX copiado!");
 
 }
 
+
+// ======================
+// ENVIAR COMPROVANTE (AQUI BLOQUEIA OS NÚMEROS)
+// ======================
 function envviarcomprovante() {
 
   const nome = document.getElementById("nome").value;
   const telefone = document.getElementById("telefone").value;
 
-  const numeros = window.selecionados.join(", ");
+  if (selecionados.length === 0) {
+    alert("Selecione números!");
+    return;
+  }
 
-  const numeroWhatsapp = "5511998459106";
+  const numerosComprados = [...selecionados];
 
-  const mensagem = `
-Olá! Estou enviando o comprovante do PIX da rifa atletas de ouro!
+  const mensagem = `Nome: ${nome}\nNúmeros: ${numerosComprados.join(", ")}`;
 
-👤 Nome: ${nome}
-📱 Telefone: ${telefone}
+  window.open(
+    "https://wa.me/5511998459106?text=" + encodeURIComponent(mensagem),
+    "_blank"
+  );
 
-🎟️ Números escolhidos:
-${numeros}
-`;
+  // 🔥 SALVAR COMO COMPRADOS
+  comprados.push(...numerosComprados);
+  comprados = [...new Set(comprados)];
 
-  const url = `https://wa.me/${numeroWhatsapp}?text=${encodeURIComponent(mensagem)}`;
+  localStorage.setItem("comprados", JSON.stringify(comprados));
 
-  window.open(url, "_blank");
+  // 🔥 ATUALIZAR VISUAL
+  atualizarBloqueio();
+
+  // LIMPAR SELEÇÃO
+  selecionados = [];
+  atualizarLista();
 }
+  // 🔥 BLOQUEAR NÚMEROS
+  comprados.push(...numeros);
+  comprados = [...new Set(comprados)];
 
-function fecharPopup() {
+  localStorage.setItem("comprados", JSON.stringify(comprados));
 
-  document.getElementById("popupPix").classList.remove("ativo");
+  document.querySelectorAll(".numero").forEach(btn => {
 
-}
+    if (comprados.includes(btn.textContent)) {
+      btn.classList.add("comprado");
+      btn.classList.remove("ativo");
+      btn.disabled = true;
+    }
 
-function fecharPopup() {
+  });
 
-  // fecha popup
-  document.getElementById("popupPix").classList.remove("ativo");
-
-  // limpa selecionados
-  window.selecionados = [];
-
-  // remove seleção visual
-  document.querySelectorAll(".numero")
-    .forEach(b => b.classList.remove("ativo"));
-
-  // atualiza lista
+  selecionados = [];
   atualizarLista();
 
-  // limpa inputs
-  document.getElementById("nome").value = "";
-  document.getElementById("email").value = "";
-  document.getElementById("telefone").value = "";
 
-}
 
-  // FUNÇÃO FECHAR PIX E VOLTAR PARA TELA INICIAL
+// ======================
+// FECHAR PIX
+// ======================
 
 function fecharPix() {
 
-  // Fecha o popup PIX
-  document.getElementById("popupPix").style.display = "none";
+  document.getElementById("popupPix").classList.remove("ativo");
 
-  // Libera o scroll da página
   document.body.style.overflow = "auto";
 
-  // Volta para o topo/banner inicial
   document.querySelector(".banner").scrollIntoView({
     behavior: "smooth"
   });
 
 }
 
+function atualizarBloqueio() {
+
+  document.querySelectorAll(".numero").forEach(btn => {
+
+    const numero = btn.textContent;
+
+    if (comprados.includes(numero)) {
+      btn.classList.add("comprado");
+      btn.classList.remove("ativo");
+      btn.disabled = true;
+    }
+
+  });
+
+}
+atualizarBloqueio();
+
+// POPUP TERMOS
+
+const popupTermos = document.getElementById("popup-termos");
+const btnTermos = document.getElementById("btn-termos");
+
+if(localStorage.getItem("termosAceitos")){
+  popupTermos.style.display = "none";
+}
+
+btnTermos.addEventListener("click", () => {
+
+  localStorage.setItem("termosAceitos", "sim");
+
+  popupTermos.style.display = "none";
+
+});
