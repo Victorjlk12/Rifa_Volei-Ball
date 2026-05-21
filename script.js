@@ -278,3 +278,4 @@ btnTermos.addEventListener("click", () => {
   popupTermos.style.display = "none";
 
 });
+

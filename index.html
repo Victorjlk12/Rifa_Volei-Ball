@@ -40,6 +40,21 @@
 
 <body>
 
+<!-- LOGIN TOPO -->
+<div class="top-login">
+
+  <button class="btn-login">
+    <i class="fa-solid fa-user"></i>
+    LOGIN
+  </button>
+
+  <button class="btn-criaracount" onclick="abrirCriarConta()">
+    <i class="fa-solid fa-user-plus"></i>
+    CRIAR CONTA
+  </button>
+
+</div>
+
   <!-- POPUP TERMOS -->
 <div id="popup-termos" class="popup-termos">
 
@@ -210,6 +225,12 @@
       Vitorjlk12
     </a>
 
+    <a href="@">
+      Feito por
+      <i class="fa-brands fa-instagram"></i>
+      _.alvesszxs011
+    </a>
+
     <a href="#">
       <i class="fa-brands fa-instagram"></i>
       @ATEV.AABBCAMPINAS
@@ -227,6 +248,60 @@
     }
   </script>
 
+
+<!-- POPUP CRIAR CONTA -->
+<div class="popup" id="popupCriarConta">
+
+  <div class="popup-box">
+
+    <h2>Criar Conta</h2>
+
+    <input type="text" placeholder="Nome completo">
+
+    <input type="tel" placeholder="Número de telefone">
+
+    <input type="email" placeholder="E-mail">
+
+    <input type="text" placeholder="CPF">
+
+    <input type="password" placeholder="Senha">
+
+    <button onclick="criarConta()">
+      CRIAR CONTA
+    </button>
+
+    <button onclick="fecharCriarConta()" style="margin-top:10px;">
+      FECHAR
+    </button>
+
+  </div>
+
+</div>
+
+<script>
+
+  function abrirCriarConta(){
+  
+    document.getElementById("popupCriarConta").style.display = "flex";
+  
+  }
+  
+  function fecharCriarConta(){
+  
+    document.getElementById("popupCriarConta").style.display = "none";
+  
+  }
+  
+  function criarConta(){
+  
+    alert("Conta criada com sucesso!");
+  
+    fecharCriarConta();
+  
+  }
+  
+  </script>
+  
 </body>
 
 </html>
