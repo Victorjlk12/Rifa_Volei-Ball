@@ -1,0 +1,1 @@
+db.participantes.find({ numeros_escolhidos: 22 });

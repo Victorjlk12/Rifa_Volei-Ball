@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rifa Atletas de Ouro</title>
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    body {
+      background: #000a1d;
+      color: #fff;
+      font-family: Arial;
+    }
+
+    .contador {
+      background: #00071b;
+      padding: 20px;
+      text-align: center;
+      font-size: 30px;
+      border-radius: 10px;
+      margin: 30px;
+    }
+
+    #timer {
+      color: #38bdf8;
+      font-weight: bold;
+    }
+
+    /* CSS do select */
+    #formaPagamento {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      background: #020d1c;
+      border: 1px solid #1e3a5f;
+      color: #fff;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- POPUP TERMOS -->
+  <div id="popup-termos" class="popup-termos">
+    <div class="popup-box-termos">
+      <h2>Termos de Uso</h2>
+      <p>
+        Os dados coletados neste site não serão utilizados para nada além de armazenamento interno de dados para o sorteio após a data expirada!
+        Ao acessar este site você concorda com os termos de uso.
+      </p>
+      <button onclick="fecharTermos()">ACEITAR</button>
+    </div>
+  </div>
+
+  <!-- CONTADOR -->
+  <div class="contador">
+    ⏰ Sorteio termina em:
+    <span id="timer"></span>
+  </div>
+
+  <!-- POPUP COMPRA -->
+  <div class="popup" id="popup">
+    <div class="popup-box">
+      <h2>Finalizar Compra</h2>
+      <input type="text" id="nome" placeholder="Nome completo" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="tel" id="telefone" placeholder="WhatsApp com DDD" required>
+      <input type="text" id="cpf" placeholder="CPF" maxlength="14" required>
+
+      <!-- SELECT DE FORMA DE PAGAMENTO -->
+      <select id="formaPagamento" required>
+        <option value="" disabled selected>Indicação</option>
+        <option value="pix">Nome</option>
+        <option value="cartao">Nome</option>
+        <option value="dinheiro">Não houve Indicação</option>
+      </select>
+
+      <div id="listaNumeros"></div>
+      <button onclick="confirmarCompra()">Confirmar compra</button>
+    </div>
+  </div>
+
+  <!-- POPUP PAGAMENTO PIX -->
+  <div class="popup" id="popupPix">
+    <div class="popup-box">
+      <h2>Pagamento PIX</h2>
+      <p style="text-align:center; color:#d1d5db;">
+        Copie o PIX abaixo para efetuar o pagamento!
+      </p>
+      <div id="pixChave" style="background:#020d1c; padding:12px; border-radius:10px; text-align:center; color:#38bdf8; font-weight:bold; word-break:break-all;">
+        65.221.329/0001-28
+      </div>
+      <button onclick="copiarPix()" class="btn-copiar">📋 Copiar PIX</button>
+      <button onclick="enviarComprovante()" style="margin-top:5px;">ENVIAR COMPROVANTE</button>
+      <button onclick="fecharPix()" style="margin-top:10px;">FECHAR</button>
+    </div>
+  </div>
+
+  <!-- BANNER -->
+  <header class="banner">
+    <div class="banner-content">
+      <div class="banner-text">
+        <h1>RIFA: <br> ATLETAS DE OURO!</h1>
+        <div class="linha"></div>
+        <p>Ajude nosso time a representar o Brasil em Lima PERU</p>
+        <a href="#rifa" class="btn">
+          <i class="fa-solid fa-arrow-down"></i>
+          ESCOLHER NÚMEROS
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- OBJETIVO -->
+  <section class="objetivo">
+    <div class="card">
+      <div class="icone">
+        <i class="fa-solid fa-plane"></i>
+      </div>
+      <div class="conteudo">
+        <h2>NOSSO OBJETIVO</h2>
+        <div class="linha-pequena"></div>
+        <p>
+          Estamos arrecadando fundos para viajar ao Peru.
+          <span>Sua ajuda faz parte disso!</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RIFA -->
+  <section class="rifa" id="rifa">
+    <div class="card-rifa">
+      <h2>ESCOLHA SEUS NÚMEROS POR APENAS R$ 0,50 CADA!</h2>
+      <div class="container-grid">
+        <div class="grid-numeros" id="gridNumeros"></div>
+      </div>
+      <div class="selecionados">
+        <div class="lista-selecionados" id="listaSelecionados"></div>
+        <button class="comprar" id="comprar">COMPRAR</button>
+        <button class="limpar" id="limpar">LIMPAR</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p>JUNTOS SOMOS MAIS FORTES! 💙🏐</p>
+    <a href="https://instagram.com/vitorjlk12" target="_blank">
+      Feito por
+      <i class="fa-brands fa-instagram"></i>
+      Vitorjlk12
+    </a>
+    <a href="https://instagram.com/_.alvesszxs011" target="_blank">
+      Feito por
+      <i class="fa-brands fa-instagram"></i>
+      _.alvesszxs011
+    </a>
+    <a href="https://instagram.com/atev.aabbcampinas" target="_blank">
+      <i class="fa-brands fa-instagram"></i>
+      @ATEV.AABBCAMPINAS
+    </a>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    function fecharTermos() {
+      document.getElementById("popup-termos").style.display = "none";
+    }
+  </script>
+</body>
+</html>
